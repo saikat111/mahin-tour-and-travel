@@ -35,6 +35,7 @@
 │   └── database.sqlite         # Local zero-config database (for local CLI preview)
 ├── includes/
 │   ├── functions.php           # Security sanitizers, CSRF, SVG rendering, settings helpers
+│   ├── mailer.php              # Authenticated cPanel SSL SMTP mailer (Port 465)
 │   ├── header.php              # Master header, navigation, schema.org JSON-LD, drawer
 │   ├── footer.php              # Master footer, Gazipur address, floating WhatsApp widget
 │   └── cta-banner.php          # Reusable high-conversion consultation banner
@@ -151,7 +152,30 @@ Save the file. The website will immediately connect to MySQL!
 
 ---
 
-## 4. Default Admin Login Credentials
+---
+
+## 4. Authenticated Outbound SMTP Mail Configuration (cPanel)
+
+Shared hosting platforms frequently disable or block standard PHP `mail()`. To ensure 100% reliable email delivery for client inquiries and admin notifications, the platform includes a **zero-dependency, native PHP socket authenticated SMTP mailer** (`includes/mailer.php`).
+
+### Pre-Configured Credentials
+The system comes pre-configured with the client's cPanel email credentials in `.env` and `config/config.php`:
+- **SMTP Server / Host:** `mail.mahintravelandtours.com`
+- **Port:** `465` (SSL socket encryption)
+- **Username:** `support@mahintravelandtours.com`
+- **Password:** `zzAD%1G}IeGz8l5J`
+- **From Address:** `support@mahintravelandtours.com`
+- **Lead Alerts Recipient:** `support@mahintravelandtours.com`
+
+### Features & Fallbacks
+1. **Automated Admin Notifications:** Every time a visitor submits an inquiry on `contact.php`, `service-detail.php`, `tour-detail.php`, or `visa-detail.php`, an executive HTML email alert is automatically dispatched to staff with a **1-click direct WhatsApp chat reply button**.
+2. **Automated Client Confirmations:** If the client provided an email address, a confirmation email with Gazipur office address and contact numbers is sent immediately.
+3. **Non-Blocking Safety:** Database insertion occurs before email dispatch. If the mail server experiences temporary latency or connection issues, the error is logged without disrupting the user's booking confirmation.
+4. **1-Click Live Test Diagnostic:** Log in to **Admin Panel &rarr; Site Settings** (`admin/settings.php`) to test real-time SMTP socket handshake and inbox delivery.
+
+---
+
+## 5. Default Admin Login Credentials
 
 - **Admin Login URL:** `https://yourdomain.com/admin/login.php`
 - **Username:** `admin`
@@ -162,7 +186,7 @@ Save the file. The website will immediately connect to MySQL!
 
 ---
 
-## 5. Security Implementations
+## 6. Security Implementations
 
 1. **SQL Injection Defense:** 100% of queries use PDO prepared statements with bound parameters (`?`). Emulated prepares are disabled.
 2. **XSS Protection:** All user-facing outputs pass through `e()` which enforces `htmlspecialchars($val, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')`.
@@ -172,7 +196,7 @@ Save the file. The website will immediately connect to MySQL!
 
 ---
 
-## 6. Local Development Zero-Configuration Preview
+## 7. Local Development Zero-Configuration Preview
 
 To run and preview the website locally without configuring an external MySQL server:
 ```bash

@@ -97,3 +97,13 @@ define('DEFAULT_WHATSAPP', '+8801924713765');
 define('DEFAULT_EMAIL', 'info@mahintravelandtours.com');
 define('DEFAULT_ADDRESS', 'Holding no-1492, South Salna, Ward No-19, Zone-5, Gazipur, Bangladesh');
 define('DEFAULT_BENGALI_NAME', 'মাহিন ট্রাভেল এন্ড ট্যুরস');
+
+// 8. Authenticated Outbound SMTP Mail Configuration (cPanel Shared Hosting)
+define('SMTP_HOST', getenv('SMTP_HOST') ?: 'mail.mahintravelandtours.com');
+define('SMTP_PORT', (int)(getenv('SMTP_PORT') ?: 465));
+define('SMTP_USER', getenv('SMTP_USER') ?: 'support@mahintravelandtours.com');
+define('SMTP_PASS', getenv('SMTP_PASS') !== false && getenv('SMTP_PASS') !== '' ? getenv('SMTP_PASS') : 'zzAD%1G}IeGz8l5J');
+define('SMTP_SECURE', getenv('SMTP_SECURE') ?: 'ssl'); // 'ssl' for port 465, 'tls' for port 587
+define('SMTP_FROM_EMAIL', getenv('SMTP_FROM_EMAIL') ?: 'support@mahintravelandtours.com');
+define('SMTP_FROM_NAME', getenv('SMTP_FROM_NAME') ?: 'Mahin Travel & Tours');
+define('MAIL_NOTIFICATION_RECIPIENT', getenv('MAIL_NOTIFICATION_RECIPIENT') ?: 'support@mahintravelandtours.com');

@@ -43,7 +43,17 @@ function seedDatabase(PDO $pdo): void {
 
         // Social Links
         ['facebook_url', 'https://facebook.com', 'social', 'text', 'Facebook Page URL', 'Official Facebook link'],
-        ['whatsapp_link_message', 'Hello Mahin Travel & Tours! I would like to inquire about your travel and visa services.', 'social', 'text', 'WhatsApp Default Message', 'Pre-filled message when clicking WhatsApp']
+        ['whatsapp_link_message', 'Hello Mahin Travel & Tours! I would like to inquire about your travel and visa services.', 'social', 'text', 'WhatsApp Default Message', 'Pre-filled message when clicking WhatsApp'],
+
+        // Authenticated Outbound SMTP Settings (cPanel Shared Hosting)
+        ['smtp_host', 'mail.mahintravelandtours.com', 'email', 'text', 'SMTP Host', 'cPanel outgoing mail server'],
+        ['smtp_port', '465', 'email', 'number', 'SMTP Port', 'Port 465 (SSL) or 587 (TLS)'],
+        ['smtp_user', 'support@mahintravelandtours.com', 'email', 'text', 'SMTP Username', 'Full email address'],
+        ['smtp_pass', 'zzAD%1G}IeGz8l5J', 'email', 'password', 'SMTP Password', 'cPanel mailbox password'],
+        ['smtp_secure', 'ssl', 'email', 'text', 'Encryption', 'ssl or tls'],
+        ['smtp_from_email', 'support@mahintravelandtours.com', 'email', 'email', 'From Email', 'Sender email address'],
+        ['smtp_from_name', 'Mahin Travel & Tours', 'email', 'text', 'From Name', 'Sender display name'],
+        ['mail_notification_recipient', 'support@mahintravelandtours.com', 'email', 'email', 'Admin Notification Email', 'Inquiry notification recipient']
     ];
 
     $setStmt = $pdo->prepare("INSERT OR IGNORE INTO site_settings (setting_key, setting_value, setting_group, field_type, label, help_text) VALUES (?, ?, ?, ?, ?, ?)");

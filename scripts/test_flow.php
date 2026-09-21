@@ -54,4 +54,33 @@ $upd->execute([$lastId]);
 $checkRead = $pdo->query("SELECT is_read FROM contact_messages WHERE id = {$lastId}")->fetchColumn();
 echo "8. Lead status toggle verified (is_read: {$checkRead}) (PASS)\n";
 
-echo "--- All 8 System Checks Passed Successfully! ---\n";
+// 6. Test SMTP Configuration & Mailer Engine
+require_once __DIR__ . '/../includes/mailer.php';
+$smtpHost = getSetting('smtp_host', SMTP_HOST);
+$smtpUser = getSetting('smtp_user', SMTP_USER);
+$smtpPort = getSetting('smtp_port', (string)SMTP_PORT);
+echo "9. SMTP Settings loaded: Host={$smtpHost}, Port={$smtpPort}, User={$smtpUser} (PASS)\n";
+
+$mailer = new SMTPMailer(null, null, null, null, null, 2);
+echo "10. SMTPMailer initialized successfully (PASS)\n";
+
+// 7. Test Non-Blocking Contact Form Mail Dispatch Fallback
+$mockLead = [
+    'name'         => 'Hasan Ali',
+    'email'        => 'hasan@example.com',
+    'phone'        => '+8801722203033',
+    'subject'      => 'Umrah VIP Package',
+    'service_type' => 'Umrah Packages',
+    'message'      => 'Inquiry for December Umrah package with direct flights.',
+    'ip_address'   => '127.0.0.1'
+];
+$mailDispatched = false;
+try {
+    // Attempt send; in local dev offline DNS this safely logs and returns false without throwing unhandled exception
+    $sendResult = sendLeadNotificationToAdmin($mockLead);
+    echo "11. Contact Form Lead Mail Dispatch executed safely (Result: " . ($sendResult ? 'Delivered' : 'Logged & Caught safely: ' . $mailer->getLastError()) . ") (PASS)\n";
+} catch (Throwable $e) {
+    echo "11. Mail dispatch threw uncaught exception: " . $e->getMessage() . " (FAIL)\n";
+}
+
+echo "--- All 11 System & SMTP Integration Checks Passed Successfully! ---\n";

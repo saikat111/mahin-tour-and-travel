@@ -34,6 +34,33 @@ CREATE TABLE IF NOT EXISTS `site_settings` (
   UNIQUE KEY `idx_setting_key` (`setting_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT IGNORE INTO `site_settings` (`setting_key`, `setting_value`, `setting_group`, `field_type`, `label`, `help_text`) VALUES
+('site_name', 'Mahin Travel & Tours', 'general', 'text', 'Company / Brand Name', 'Official trading name'),
+('bengali_name', 'মাহিন ট্রাভেল এন্ড ট্যুরস', 'general', 'text', 'Bengali Brand Name', 'Official Bengali script name'),
+('tagline', 'Your Trusted Gateway to the World', 'general', 'text', 'Brand Tagline', 'Primary marketing slogan'),
+('owner_name', 'Managing Director', 'general', 'text', 'Contact / Authorized Person', 'Primary business representative'),
+('phone_primary', '+8801924713765', 'contact', 'text', 'Primary Phone Number', 'Main customer support line'),
+('phone_secondary', '+8801722203033', 'contact', 'text', 'Secondary Phone Number', 'Alternative contact number'),
+('whatsapp_number', '+8801924713765', 'contact', 'text', 'WhatsApp Number', 'Direct WhatsApp consultation line'),
+('contact_email', 'info@mahintravelandtours.com', 'contact', 'email', 'Official Email Address', 'General inquiries email'),
+('office_address', 'Holding no-1492, South Salna, Ward No-19, Zone-5, Gazipur, Bangladesh', 'contact', 'textarea', 'Office Address', 'Physical registered headquarters'),
+('business_hours', 'Saturday - Thursday: 9:30 AM - 8:30 PM (Friday: Closed / By Prior Appointment)', 'contact', 'text', 'Business Hours', 'Customer operating hours'),
+('google_maps_embed', 'https://maps.google.com/maps?q=South+Salna+Gazipur+Bangladesh&t=&z=14&ie=UTF8&iwloc=&output=embed', 'contact', 'textarea', 'Google Maps Embed URL', 'Embed URL for the contact page'),
+('hero_badge', 'Certified Travel & Visa Consultants', 'appearance', 'text', 'Hero Badge Text', 'Small badge above hero headline'),
+('hero_title', 'Seamless Journeys, Authentic Visa Advisory & Curated Global Tours', 'appearance', 'text', 'Hero Main Title', 'H1 on the homepage'),
+('hero_subtitle', 'From our Gazipur headquarters to destinations across the globe, Mahin Travel & Tours delivers meticulous visa processing, international air ticketing, and bespoke holiday packages with personal human dedication.', 'appearance', 'textarea', 'Hero Subtitle', 'Descriptive copy in hero section'),
+('default_meta_title', 'Mahin Travel & Tours | Trusted Visa Assistance & Global Tour Operator Gazipur', 'seo', 'text', 'Default Meta Title', 'Browser title for pages without custom title'),
+('default_meta_desc', 'Mahin Travel & Tours in Gazipur offers professional visa assistance, international air tickets, Umrah packages, and curated global holiday tours. Transparent advisory and dedicated support.', 'seo', 'textarea', 'Default Meta Description', 'Search engine snippet'),
+('default_keywords', 'travel agency gazipur, visa processing bangladesh, air tickets gazipur, umrah package bangladesh, mahin travel and tours, holiday tours', 'seo', 'text', 'Default Meta Keywords', 'Comma-separated keywords'),
+('smtp_host', 'mail.mahintravelandtours.com', 'email', 'text', 'SMTP Host', 'cPanel outgoing mail server'),
+('smtp_port', '465', 'email', 'number', 'SMTP Port', 'Port 465 (SSL) or 587 (TLS)'),
+('smtp_user', 'support@mahintravelandtours.com', 'email', 'text', 'SMTP Username', 'Full email address'),
+('smtp_pass', 'zzAD%1G}IeGz8l5J', 'email', 'password', 'SMTP Password', 'cPanel mailbox password'),
+('smtp_secure', 'ssl', 'email', 'text', 'Encryption', 'ssl or tls'),
+('smtp_from_email', 'support@mahintravelandtours.com', 'email', 'email', 'From Email', 'Sender email address'),
+('smtp_from_name', 'Mahin Travel & Tours', 'email', 'text', 'From Name', 'Sender display name'),
+('mail_notification_recipient', 'support@mahintravelandtours.com', 'email', 'email', 'Admin Notification Email', 'Inquiry notification recipient');
+
 -- 3. Services Table
 CREATE TABLE IF NOT EXISTS `services` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

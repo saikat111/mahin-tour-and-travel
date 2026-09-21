@@ -35,6 +35,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare("INSERT INTO contact_messages (name, email, phone, subject, service_type, message, ip_address, is_read) VALUES (?, ?, ?, ?, ?, ?, ?, 0)");
                 $stmt->execute([$name, $email, $phone, $subject, $serviceType, $message, $ip]);
 
+                // Dispatch Authenticated Outbound Emails via cPanel SSL SMTP
+                try {
+                    require_once __DIR__ . '/includes/mailer.php';
+                    $leadData = [
+                        'name'         => $name,
+                        'email'        => $email,
+                        'phone'        => $phone,
+                        'subject'      => $subject,
+                        'service_type' => $serviceType,
+                        'message'      => $message,
+                        'ip_address'   => $ip
+                    ];
+                    // 1. Notify Admin/Staff of incoming customer inquiry
+                    sendLeadNotificationToAdmin($leadData);
+                    // 2. Send confirmation to client if valid email provided
+                    if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        sendClientConfirmationEmail($leadData);
+                    }
+                } catch (Throwable $mailErr) {
+                    error_log("Outbound SMTP failure: " . $mailErr->getMessage());
+                }
+
                 // Set flash and redirect (PRG pattern)
                 setFlashMessage('success', "Thank you, {$name}! Your inquiry has been received. Our Gazipur travel consultants will review your request and connect with you via phone or WhatsApp shortly.");
                 header("Location: " . url('contact.php?submitted=1'));
