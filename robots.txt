@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /sql/
+Disallow: /scripts/
+
+Sitemap: https://mahintravelandtours.com/sitemap.xml

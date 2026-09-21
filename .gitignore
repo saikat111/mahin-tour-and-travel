@@ -1,0 +1,13 @@
+﻿# Temporary & Log Files
+*.log
+error_log.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Ensure SQLite DB and .env are explicitly tracked per user requirement
+!config/database.sqlite
+!.env
+!.env.example
+!sql/database.sql

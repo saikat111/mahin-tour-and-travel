@@ -1,0 +1,24 @@
+# Disable PHP execution in uploads directory
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# Remove script handlers
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .asp .aspx .shtml
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .asp .aspx .shtml
+
+# Only allow safe media types
+<FilesMatch "\.(?i:jpe?g|png|gif|webp|svg|pdf)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+<FilesMatch "\.(?i:php[0-9]?|phtml|sh|bash|exe|pl|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
